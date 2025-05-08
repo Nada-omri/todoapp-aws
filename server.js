@@ -7,10 +7,10 @@ app.use(express.json());
 
 // Connexion à la base de données RDS
 const db = mysql.createConnection({
-  host: 'todo-db.c78ay0i4m4da.eu-north-1.rds.amazonaws.com', // ← ton endpoint RDS
+  host: 'database-1.c47yic2um3yg.us-east-1.rds.amazonaws.com', // ← ton endpoint RDS
   user: 'admin',             // ← ton utilisateur RDS
-  password: 'mytodo-app123',  // ← ton mot de passe
-  database: 'todo_db',       // ← le nom de ta base
+  password: 'mytodoapp123',  // ← ton mot de passe
+  database: 'database-1',       // ← le nom de ta base
   port: 3306                 // ← port MySQL par défaut (facultatif mais recommandé)
 });
 
