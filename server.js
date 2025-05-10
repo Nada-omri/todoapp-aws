@@ -28,5 +28,8 @@ app.get('/todos', (req, res) => {
     res.json(results);
   });
 });
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 
