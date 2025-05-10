@@ -5,13 +5,13 @@ const mysql = require('mysql2');
 const app = express();
 app.use(express.json());
 
-// Connexion à la base de données RDS
+// Connexion à la base de données RDS avec variables d'environnement
 const db = mysql.createConnection({
-  host: 'database-1.c47yic2um3yg.us-east-1.rds.amazonaws.com', // ← ton endpoint RDS
-  user: 'admin',             // ← ton utilisateur RDS
-  password: 'mytodoapp123',  // ← ton mot de passe
-  database: 'database-1',       // ← le nom de ta base
-  port: 3306                 // ← port MySQL par défaut (facultatif mais recommandé)
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: 3306
 });
 
 db.connect(err => {
@@ -30,7 +30,7 @@ app.get('/todos', (req, res) => {
   });
 });
 
-const PORT = 4001;
+const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
