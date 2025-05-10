@@ -1,36 +1,33 @@
-// server.js
-const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
-const app = express();
-app.use(express.json());
-
-// Connexion à la base de données RDS avec variables d'environnement
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: 3306
+
+  host: 'terraform-20250508213528251100000001.ctsoiw8yyjzh.eu-west-3.rds.amazonaws.com', // Use RDS endpoint if using Amazon RDS
+
+  user: 'admin',
+
+  password: 'mypassword123',
+
+  database: 'two_tier_db1'
+
 });
 
-db.connect(err => {
-  if (err) {
-    console.error('Erreur de connexion à MySQL :', err);
-    return;
-  }
-  console.log('Connecté à la base de données MySQL');
+db.connect((err) => {
+
+  if (err) throw err;
+
+  console.log('Connected to MySQL database');
+
 });
 
-// API simple
-app.get('/todos', (req, res) => {
-  db.query('SELECT * FROM todos', (err, results) => {
-    if (err) return res.status(500).send(err);
-    res.json(results);
+app.get('/data', (req, res) => {
+
+  db.query('SELECT * FROM your_table', (err, results) => {
+
+    if (err) throw err;
+
+    res.send(results);
+
   });
-});
 
-const PORT = process.env.PORT || 4001;
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
